@@ -23,28 +23,42 @@ def fastest_way(a, t, e, xt, n):
         # calculate for line 1
         if (f[0][j-1] + a[0][j]) < (f[1][j-1] + t[1][j-1] + a[0][j]):
             f[0][j] = f[0][j-1] + a[0][j]
-            l[0][j] = 1
+            l[0][j] = 0
         else:
             f[0][j] = f[1][j-1] + t[1][j-1] + a[0][j]
-            l[0][j] = 2
+            l[0][j] = 1
 
         # calculate for line 2
         if (f[1][j-1] + a[1][j]) < (f[0][j-1] + t[0][j-1] + a[1][j]):
             f[1][j] = f[1][j-1] + a[1][j]
-            l[1][j] = 2
+            l[1][j] = 1
         else:
             f[1][j] = f[0][j-1] + t[0][j-1] + a[1][j]
-            l[1][j] = 1
+            l[1][j] = 0
 
     f_ = ""
+    l_ = ""
     if f[0][n-1] + xt[0] < f[1][n-1] + xt[1]:
         f_ = f[0][n-1] + xt[0]
+        l_ = 0
     else:
         f_ = f[1][n-1] + xt[1]
+        l_ = 1
 
     print f
     print l
     print "f* =", f_
+    print "l* =", l_
+
+    path = []
+    path.append(l_)
+    line = l_
+    print "Line", l_, "Station", len(l[0])
+    for i in range(len(l[0])-1, 0, -1):
+        line = l[line][i]
+        print "Line", line, "Station", i
+
+
 
 
 e = [2, 4]
@@ -59,4 +73,7 @@ t = [
      ]
 lines = 2
 n = 6
+
 fastest_way(a, t, e, x, n)
+
+
